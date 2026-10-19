@@ -28,3 +28,5 @@ This project has given me hands-on practice with React state, request validation
 ## Project status
 
 The project is actively in development. Chat currently broadcasts to connected viewers and does not save message history. Usernames are for display and are not authenticated. There are no rooms and everyone is globablly connected with each other with websockets, but you only see messages and progress and get synced with people with the same anime and episode as you.
+
+Also just a notice that as the backend is hosted on render's free server, it goes to sleep if no one has used it in a while, and the website doesn't show if it is loading, so if inputs don't seem to do anything just be patient and try again in a minute or two.
