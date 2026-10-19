@@ -54,8 +54,13 @@ function AnimePicker() {
         const videoElement = videoRef.current;
         const incomingData = JSON.parse(event.data);
 
+        if (incomingData.type === "messageAdmin") {
+          setMessagesBox((prev) => [...prev, incomingData]);
+          return;
+        }
+
         if (
-          MALidRef.current != incomingData.MALid ||
+          (MALidRef.current != incomingData.MALid && incomingData.username) ||
           epNumRef.current != incomingData.epNum
         )
           return;
@@ -116,17 +121,6 @@ function AnimePicker() {
       setUsers((prev) =>
         prev.filter((user) => user.username !== userRef.current),
       );
-      const messagePayload = {
-        type: "message",
-        MALid: MALidRef.current,
-        epNum: epNumRef.current,
-        username: "System",
-        content: `${userRef} has disconnected.`,
-        time: null,
-        action: null,
-      };
-
-      sendOverWebsocket(messagePayload);
     };
     ws.onerror = (error) => {
       console.error("websocket error: ", error);

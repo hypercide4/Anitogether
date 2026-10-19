@@ -1,7 +1,13 @@
 import { useState, useRef, useEffect } from "react";
 import "./LiveChat.css";
 
-function LiveChat({ username, messages, sendOverWebsocket, MALidRef, epNumRef}) {
+function LiveChat({
+  username,
+  messages,
+  sendOverWebsocket,
+  MALidRef,
+  epNumRef,
+}) {
   const [inputText, setInputText] = useState([]);
   const chatContainerRef = useRef(null);
 
