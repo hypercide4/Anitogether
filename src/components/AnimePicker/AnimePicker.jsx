@@ -164,11 +164,11 @@ function AnimePicker() {
           <button
             className="input-button"
             onClick={async () => {
+              setShowChat(true);
+              setUsers([]);
               const payload = await getserver(selectedId, epNum);
               setUrl(payload.src);
               setSubs(payload.subs);
-              setShowChat(true);
-              setUsers([]);
             }}
           >
             go
