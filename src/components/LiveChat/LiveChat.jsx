@@ -6,10 +6,6 @@ function LiveChat({ username, messages, sendOverWebsocket, MALidRef, epNumRef}) 
   const chatContainerRef = useRef(null);
 
   useEffect(() => {
-    console.log(messages);
-  }, [messages]);
-
-  useEffect(() => {
     if (messages.length > 0 && chatContainerRef) {
       const container = chatContainerRef.current;
       container.scrollTo({
