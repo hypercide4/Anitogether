@@ -27,4 +27,4 @@ This project has given me hands-on practice with React state, request validation
 
 ## Project status
 
-The project is actively in development. Chat currently broadcasts to connected viewers and does not save message history. Usernames are for display and are not authenticated.
+The project is actively in development. Chat currently broadcasts to connected viewers and does not save message history. Usernames are for display and are not authenticated. There are no rooms and everyone is globablly connected with each other with websockets, but you only see messages and progress and get synced with people with the same anime and episode as you.
