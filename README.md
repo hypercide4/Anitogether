@@ -14,7 +14,7 @@ Visitors can search for an anime, choose an episode, and open it in the player. 
 - An embedded episode player based on the selected anime and episode.
 - A live chat interface that sends and receives messages through a WebSocket connection.
 - A React frontend, with the backend maintained and deployed separately.
-
+- Fully automatic syncing, so you don't have to worry about being behind or ahead of your friends.
 ## Built with
 
 **Frontend:** React, Vite, Axios 
