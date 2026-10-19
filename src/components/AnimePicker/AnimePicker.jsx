@@ -14,7 +14,7 @@ function AnimePicker() {
   const [subs, setSubs] = useState(null);
   const [username, setUsername] = useState("default");
   const [epNum, setEpNum] = useState("");
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessagesBox] = useState([]);
   const [search, setSearch] = useState([]);
   const [showChat, setShowChat] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
@@ -50,7 +50,7 @@ function AnimePicker() {
           return;
 
         if (incomingData.type === "message") {
-          setMessages((prev) => [...prev, incomingData]);
+          setMessagesBox((prev) => [...prev, incomingData]);
           return;
         }
 
@@ -87,7 +87,7 @@ function AnimePicker() {
           ) {
             if (
               videoElement.currentTime > incomingData.time + 5 &&
-              videoElement.currentTime < incomingData.time + 15
+              videoElement.currentTime < incomingData.time + 16
             ) {
               videoElement.currentTime = incomingData.time;
             } else if (videoElement.currentTime < incomingData.time - 20) {
@@ -105,6 +105,10 @@ function AnimePicker() {
       setUsers((prev) =>
         prev.filter((user) => user.username !== userRef.current),
       );
+      setMessagesBox((prev) => [
+        ...prev,
+        { username: "System", content: `${userRef.current} has disconnected.` },
+      ]);
     };
     ws.onerror = (error) => {
       console.error("websocket error: ", error);
