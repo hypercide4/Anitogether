@@ -116,10 +116,17 @@ function AnimePicker() {
       setUsers((prev) =>
         prev.filter((user) => user.username !== userRef.current),
       );
-      setMessagesBox((prev) => [
-        ...prev,
-        { username: "System", content: `${userRef.current} has disconnected.` },
-      ]);
+      const messagePayload = {
+        type: "message",
+        MALid: MALidRef.current,
+        epNum: epNumRef.current,
+        username: "System",
+        content: `${userRef} has disconnected.`,
+        time: null,
+        action: null,
+      };
+
+      sendOverWebsocket(messagePayload);
     };
     ws.onerror = (error) => {
       console.error("websocket error: ", error);
