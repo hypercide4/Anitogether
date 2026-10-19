@@ -16,6 +16,7 @@ function AnimePicker() {
   const [epNum, setEpNum] = useState("");
   const [messages, setMessagesBox] = useState([]);
   const [search, setSearch] = useState([]);
+  const [searchText, setSearchText] = useState("");
   const [showChat, setShowChat] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const MALidRef = useRef(0);
@@ -28,6 +29,16 @@ function AnimePicker() {
       socketRef.current.send(JSON.stringify(messagePayload));
     }
   }
+
+  useEffect(() => {
+    if (!searchText.trim()) return;
+    const timer = setTimeout(async () => {
+      const results = await searchAnime(searchText);
+      setSearch(results);
+    }, 250);
+
+    return () => clearTimeout(timer);
+  }, [searchText]);
 
   useEffect(() => {
     const ws = new WebSocket("wss://backend-rge1.onrender.com/ws");
@@ -135,9 +146,8 @@ function AnimePicker() {
           <input
             type="text"
             className="input-box"
-            onChange={async (e) => {
-              const searchItems = await searchAnime(e.target.value);
-              setSearch(searchItems);
+            onChange={(e) => {
+              setSearchText(e.target.value);
             }}
             placeholder="search"
           />
