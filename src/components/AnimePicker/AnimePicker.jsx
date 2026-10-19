@@ -167,6 +167,7 @@ function AnimePicker() {
               setUrl(payload.src);
               setSubs(payload.subs);
               setShowChat(true);
+              setUsers([]);
             }}
           >
             go
