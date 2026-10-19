@@ -87,7 +87,7 @@ function AnimePicker() {
           ) {
             if (
               videoElement.currentTime > incomingData.time + 5 &&
-              videoElement.currentTime < incomingData.time + 14
+              videoElement.currentTime < incomingData.time + 15
             ) {
               videoElement.currentTime = incomingData.time;
             } else if (videoElement.currentTime < incomingData.time - 20) {
