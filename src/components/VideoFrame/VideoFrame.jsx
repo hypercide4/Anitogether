@@ -12,6 +12,7 @@ function VideoFrame({
   epNumRef,
   epNum,
   isAutoSyncRef,
+  uuid,
 }) {
   const hlsRef = useRef(null);
   const [levels, setLevels] = useState([]);
@@ -32,6 +33,7 @@ function VideoFrame({
         content: null,
         time: videoTime,
         action: "pause",
+        id:uuid,
       };
       if (!isAutoSyncRef.current) sendOverWebsocket(messagePayload);
       isAutoSyncRef.current = false;
@@ -46,6 +48,7 @@ function VideoFrame({
         content: null,
         time: videoTime,
         action: "play",
+        id: uuid,
       };
       if (!isAutoSyncRef.current) sendOverWebsocket(messagePayload);
       isAutoSyncRef.current = false;
@@ -64,6 +67,7 @@ function VideoFrame({
         content: null,
         time: videoTime,
         action: "timeupdate",
+        id: uuid,
       };
       sendOverWebsocket(messagePayload);
     }

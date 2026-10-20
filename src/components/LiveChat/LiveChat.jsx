@@ -7,6 +7,7 @@ function LiveChat({
   sendOverWebsocket,
   MALidRef,
   epNumRef,
+  uuid,
 }) {
   const [inputText, setInputText] = useState([]);
   const chatContainerRef = useRef(null);
@@ -31,6 +32,7 @@ function LiveChat({
         content: e.target.value,
         time: null,
         action: null,
+        id: uuid,
       };
 
       sendOverWebsocket(messagePayload);
@@ -49,7 +51,7 @@ function LiveChat({
           {messages.length > 0 &&
             messages.map((message, index) => {
               const isSameUserAsBefore =
-                index > 0 && messages[index - 1].username === message.username;
+                index > 0 && messages[index - 1].id === message.id;
 
               return (
                 <div className="message" key={index}>

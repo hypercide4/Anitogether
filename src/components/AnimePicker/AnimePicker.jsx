@@ -4,6 +4,9 @@ import "./AnimePicker.css";
 import getserver from "../../services/serverapi";
 import LiveChat from "../LiveChat/LiveChat";
 import VideoFrame from "../VideoFrame/VideoFrame";
+import { v4 as uuidv4 } from "uuid";
+const uuid = uuidv4();
+let wasloadingclose = true;
 
 function AnimePicker() {
   const videoRef = useRef(null);
@@ -60,7 +63,7 @@ function AnimePicker() {
         }
 
         if (
-          (MALidRef.current != incomingData.MALid && incomingData.username) ||
+          MALidRef.current != incomingData.MALid ||
           epNumRef.current != incomingData.epNum
         )
           return;
@@ -71,21 +74,26 @@ function AnimePicker() {
         }
 
         setUsers((prev) => {
-          const username = incomingData.username.trim();
-          if (!username) return prev;
-          const exists = prev.some((user) => user.username === username);
+          const otherid = incomingData.id;
+          if (!otherid) return prev;
+          const exists = prev.some((user) => user.id === otherid);
           if (exists) {
             return prev.map((user) =>
-              user.username === username
-                ? { ...user, time: incomingData.time }
-                : user,
+              user.id === otherid ? { ...user, time: incomingData.time } : user,
             );
           }
-          return [...prev, { username: username, time: incomingData.time }];
+          return [
+            ...prev,
+            {
+              username: incomingData.username,
+              time: incomingData.time,
+              id: otherid,
+            },
+          ];
         });
 
         if (incomingData.type === "sync") {
-          if (incomingData.username === userRef.current) {
+          if (incomingData.id === uuid) {
             return;
           }
           if (incomingData.action === "pause" && !videoElement.paused) {
@@ -99,14 +107,14 @@ function AnimePicker() {
             });
           } else if (
             incomingData.action === "timeupdate" &&
-            incomingData.username !== userRef.current
+            incomingData.id !== uuid
           ) {
             if (
               videoElement.currentTime > incomingData.time + 5 &&
               videoElement.currentTime < incomingData.time + 16
             ) {
               videoElement.currentTime = incomingData.time;
-            } else if (videoElement.currentTime < incomingData.time - 20) {
+            } else if (videoElement.currentTime < incomingData.time - 16) {
               videoElement.currentTime = incomingData.time;
             }
           }
@@ -117,10 +125,12 @@ function AnimePicker() {
     };
 
     ws.onclose = () => {
+      if (wasloadingclose) {
+        wasloadingclose = false;
+        return;
+      }
       console.log("websocket connection closed");
-      setUsers((prev) =>
-        prev.filter((user) => user.username !== userRef.current),
-      );
+      setUsers((prev) => prev.filter((user) => user.id !== uuid));
     };
     ws.onerror = (error) => {
       console.error("websocket error: ", error);
@@ -166,7 +176,6 @@ function AnimePicker() {
             onClick={async () => {
               setShowChat(true);
               setUsers([]);
-              setMessagesBox([]);
               const payload = await getserver(selectedId, epNum);
               setUrl(payload.src);
               setSubs(payload.subs);
@@ -242,6 +251,7 @@ function AnimePicker() {
               epNumRef={epNumRef}
               epNum={epNum}
               isAutoSyncRef={isAutoSyncRef}
+              uuid={uuid}
             />
           )}
         </div>
@@ -254,6 +264,7 @@ function AnimePicker() {
               sendOverWebsocket={sendOverWebsocket}
               MALidRef={MALidRef}
               epNumRef={epNumRef}
+              uuid={uuid}
             />
           </>
         )}
