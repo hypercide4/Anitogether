@@ -232,7 +232,8 @@ function AnimePicker() {
                   key={`${user.username}-${index}`}
                 >
                   <p>
-                    {user.username}: {minutes}:{seconds}
+                    {user.username}
+                    {user.id === uuid && " (You) "}: {minutes}:{seconds}
                   </p>
                 </div>
               );
