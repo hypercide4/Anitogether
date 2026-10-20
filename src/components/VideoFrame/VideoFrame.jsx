@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import "../AnimePicker/AnimePicker.css";
 import Hls from "hls.js";
+import getserver from "../../services/serverapi";
 
 function VideoFrame({
   src,
@@ -13,6 +14,11 @@ function VideoFrame({
   epNum,
   isAutoSyncRef,
   uuid,
+  setSubs,
+  setUrl,
+  setUsers,
+  selectedId,
+  setEpNum,
 }) {
   const hlsRef = useRef(null);
   const [levels, setLevels] = useState([]);
@@ -33,7 +39,7 @@ function VideoFrame({
         content: null,
         time: videoTime,
         action: "pause",
-        id:uuid,
+        id: uuid,
       };
       if (!isAutoSyncRef.current) sendOverWebsocket(messagePayload);
       isAutoSyncRef.current = false;
@@ -140,7 +146,7 @@ function VideoFrame({
         />
       </video>
       {levels.length > 0 && (
-        <>
+        <div className="video-option-container">
           <label className="quality-label">
             <select
               value={quality}
@@ -158,7 +164,34 @@ function VideoFrame({
             </select>
             Quality, Episode {epNum}
           </label>
-        </>
+          <button
+            onClick={async () => {
+              if (epNumRef.current == 1) return;
+              setUsers([]);
+              epNumRef.current -= 1;
+              setEpNum(epNumRef.current);
+              const payload = await getserver(selectedId, epNum - 1);
+              setUrl(payload.src);
+              setSubs(payload.subs);
+            }}
+            className="go-prev option-change-episode"
+          >
+            Go prev
+          </button>
+          <button
+            onClick={async () => {
+              setUsers([]);
+              epNumRef.current = Number(epNumRef.current) + 1;
+              setEpNum(String(epNumRef.current));
+              const payload = await getserver(selectedId, epNum + 1);
+              setUrl(payload.src);
+              setSubs(payload.subs);
+            }}
+            className="option-change-episode"
+          >
+            Go next
+          </button>
+        </div>
       )}
     </div>
   );

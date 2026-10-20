@@ -145,6 +145,27 @@ video::-webkit-media-text-track-display {
     0 -1px 0 rgba(255, 255, 255, 0.2);
 }
 
+.video-option-container {
+  display: flex;
+}
+
+.go-prev {
+  margin-left: 890px;
+  margin-right: 10px;
+}
+
+.option-change-episode {
+  padding: 10px 15px;
+  color: white;
+  background-color: #504f4f;
+  border: none;
+  border-radius: 10px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
 .footer footer {
   font-family: Arial;
   color: #504f4f;

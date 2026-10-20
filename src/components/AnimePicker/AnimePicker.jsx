@@ -250,9 +250,14 @@ function AnimePicker() {
               username={username}
               MALidRef={MALidRef}
               epNumRef={epNumRef}
+              setEpNum={setEpNum}
               epNum={epNum}
               isAutoSyncRef={isAutoSyncRef}
               uuid={uuid}
+              setUrl={setUrl}
+              setUsers={setUsers}
+              setSubs={setSubs}
+              selectedId={selectedId}
             />
           )}
         </div>
