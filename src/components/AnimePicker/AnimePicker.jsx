@@ -166,6 +166,7 @@ function AnimePicker() {
             onClick={async () => {
               setShowChat(true);
               setUsers([]);
+              setMessagesBox([]);
               const payload = await getserver(selectedId, epNum);
               setUrl(payload.src);
               setSubs(payload.subs);
