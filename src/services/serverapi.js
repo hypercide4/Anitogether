@@ -1,6 +1,6 @@
 import axios from "axios";
 
-async function getserver(selectedId, epNum) {
+async function getServer(selectedId, epNum) {
   const payload = {
     MALid: selectedId,
     epnum: epNum,
@@ -13,4 +13,4 @@ async function getserver(selectedId, epNum) {
   return src.data;
 }
 
-export default getserver;
+export default getServer;

@@ -1,0 +1,95 @@
+.input-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.input-box {
+  border-radius: 10px;
+  font-size: 24px;
+  font-family: Arial;
+  padding: 10px 20px;
+  margin: 10px 15px;
+  background-color: rgb(34, 34, 34);
+  color: white;
+  border: none;
+  height: 67px;
+}
+
+.input-box::placeholder {
+  color: white;
+}
+
+.input-button {
+  background-color: rgb(35, 35, 35);
+  color: white;
+  border: none;
+  height: 67px;
+  padding: 20px 30px;
+  margin: 10px 15px;
+  border-radius: 10px;
+  font-size: 24px;
+  font-family: Arial;
+}
+
+.input-button:hover {
+  cursor: pointer;
+}
+
+/* 2. Push Captions Up Globally (Initial State) */
+video::-webkit-media-text-track-container {
+  padding-bottom: 50px !important;
+  box-sizing: border-box !important;
+}
+
+video::-webkit-media-text-track-display {
+  overflow: visible !important;
+  transform: translateY(-30px) !important;
+}
+
+.video-chat-container {
+  display: flex;
+  align-items: center;
+}
+
+.search-items {
+  color: white;
+  font-family: Arial;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.search-item {
+  font-size: 20px;
+  margin: 10px 15px;
+}
+
+.search-item-clicked {
+  font-size: 20px;
+  margin: 10px 15px;
+  background-color: rgb(14, 84, 34);
+  border-radius: 10px;
+}
+.search-item:hover,
+.search-item-clicked:hover {
+  cursor: pointer;
+}
+
+.search-name {
+  margin-bottom: 10px;
+}
+
+
+
+.footer footer {
+  font-family: Arial;
+  color: #504f4f;
+  font-size: 20px;
+  margin-left: 200px;
+  margin-bottom: 50px;
+  font-weight: 600;
+  text-shadow:
+    0 1px 0 rgba(0, 0, 0, 0.4),
+    0 -1px 0 rgba(255, 255, 255, 0.2);
+}

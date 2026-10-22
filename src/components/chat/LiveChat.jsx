@@ -9,7 +9,7 @@ function LiveChat({
   epNumRef,
   uuid,
 }) {
-  const [inputText, setInputText] = useState([]);
+  const [inputText, setInputText] = useState("");
   const chatContainerRef = useRef(null);
 
   useEffect(() => {
