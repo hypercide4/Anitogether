@@ -86,6 +86,6 @@
   overflow-y: auto;
 }
 
-.chat-input input::placeholder {
+.chat-input textarea::placeholder {
   color: rgb(138, 138, 138);
 }
