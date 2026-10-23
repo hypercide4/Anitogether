@@ -6,7 +6,7 @@ async function getServer(selectedId, epNum) {
     epnum: epNum,
   };
   const src = await axios.post(
-    `https://backend-rge1.onrender.com/anime/watch`,
+    `https://backend-xte1.onrender.com/anime/watch`,
     payload,
   );
 

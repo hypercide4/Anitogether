@@ -17,7 +17,7 @@ export default function useRoomSocket({
     }
   }, []);
   useEffect(() => {
-    const ws = new WebSocket("wss://backend-rge1.onrender.com/ws");
+    const ws = new WebSocket("wss://backend-xte1.onrender.com/ws");
     socketRef.current = ws;
     ws.onopen = () => {
       if (socketRef.current) {
