@@ -85,6 +85,12 @@ video::cue {
   }
 }
 
+video:fullscreen,
+video:-webkit-full-screen {
+  border: none;
+  border-radius: 0;
+}
+
 .embed-message-content-container {
   width: 300px;
 }
