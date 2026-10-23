@@ -20,10 +20,12 @@ video::cue {
 }
 
 .anime-frame {
-  border: none;
+  border-radius: 10px;
+  border: solid;
+  border-color: #504f4f;
   margin-top: 100px;
   width: 1280px;
-  height: 780px;
+  height: 723px;
   margin-left: 40px;
   display: flex;
   outline: none;

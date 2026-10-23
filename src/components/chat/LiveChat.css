@@ -1,15 +1,14 @@
 .chat-container {
-  width: 350px; /* Sets your exact fixed width */
-  min-width: 350px; /* Prevents the browser from squeezing it narrower */
-  flex-shrink: 0; /* ABSOLUTELY CRITICAL: Forces it to stay a rectangle */
-  height: 100%; /* Fills the screen vertically */
-  background-color: #2a2a2a; /* Your gray background tint */
+  width: 350px;
+  min-width: 350px;
+  flex-shrink: 0;
+  background-color: #2a2a2a;
   display: flex;
-  flex-direction: column; /* Stack messages top, input box bottom */
+  flex-direction: column;
   border-left: 1px solid #3d3d3d;
   border-radius: 10px;
   margin-left: 10px;
-  height: 700px;
+  height: 724px;
   margin-top: 38px;
   font-family:
     system-ui,
