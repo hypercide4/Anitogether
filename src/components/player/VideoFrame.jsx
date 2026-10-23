@@ -16,6 +16,7 @@ function VideoFrame({
   uuid,
   selectedId,
   setEpNum,
+  loading,
   fetchEpisode,
 }) {
   const hlsRef = useRef(null);
@@ -30,6 +31,7 @@ function VideoFrame({
     epNumRef,
     username,
     sendOverWebsocket,
+    loading,
   });
 
   useEffect(() => {
@@ -88,70 +90,79 @@ function VideoFrame({
       await fetchEpisode(selectedId, nextEpisode);
     } catch (error) {
       console.log("couldn't lose episode, error: ", error);
-      setEpNum(String(nextEpisode - amount))
-      epNumRef.current = String(nextEpisode - amount)
+      setEpNum(String(nextEpisode - amount));
+      epNumRef.current = String(nextEpisode - amount);
     }
   }
 
-  return (
-    <div className="video-container">
-      <div>
-        <video
-          ref={videoRef}
-          controls
-          playsInline
-          className="anime-frame"
-          crossOrigin="anonymous"
-          autoPlay
-        >
-          <track
-            src={subs}
-            kind="subtitles"
-            srcLang="en"
-            label="English"
-            default
-          />
-        </video>
-        {levels.length > 0 && (
-          <div className="video-option-container">
-            <label className="quality-label">
-              <select
-                value={quality}
-                onChange={changeQuality}
-                className="quality-selection"
+  if (!loading) {
+    return (
+      <div className="video-container">
+        <div>
+          <video
+            ref={videoRef}
+            controls
+            playsInline
+            className="anime-frame"
+            crossOrigin="anonymous"
+            autoPlay
+            aria-hidden="true"
+          >
+            <track
+              src={subs}
+              kind="subtitles"
+              srcLang="en"
+              label="English"
+              default
+            />
+          </video>
+          {levels.length > 0 && (
+            <div className="video-option-container">
+              <label className="quality-label">
+                <select
+                  value={quality}
+                  onChange={changeQuality}
+                  className="quality-selection"
+                >
+                  <option value={-1}>Auto</option>
+                  {levels.map((level, index) => (
+                    <option key={`${level.height}-${index}`} value={index}>
+                      {level.height
+                        ? `${level.height}p`
+                        : `${Math.round(level.bitrate / 1000)} kbps`}
+                    </option>
+                  ))}
+                </select>
+                Quality, Episode {epNum}
+              </label>
+              <button
+                onClick={() => {
+                  changeEpisodeBy(-1);
+                }}
+                className="go-prev option-change-episode"
               >
-                <option value={-1}>Auto</option>
-                {levels.map((level, index) => (
-                  <option key={`${level.height}-${index}`} value={index}>
-                    {level.height
-                      ? `${level.height}p`
-                      : `${Math.round(level.bitrate / 1000)} kbps`}
-                  </option>
-                ))}
-              </select>
-              Quality, Episode {epNum}
-            </label>
-            <button
-              onClick={() => {
-                changeEpisodeBy(-1);
-              }}
-              className="go-prev option-change-episode"
-            >
-              Go prev
-            </button>
-            <button
-              onClick={() => {
-                changeEpisodeBy(1);
-              }}
-              className="option-change-episode"
-            >
-              Go next
-            </button>
-          </div>
-        )}
+                Go prev
+              </button>
+              <button
+                onClick={() => {
+                  changeEpisodeBy(1);
+                }}
+                className="option-change-episode"
+              >
+                Go next
+              </button>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
-  );
+    );
+  } else {
+    return (
+      <div>
+        <h2 className="loading">currently loading your video..</h2>
+      </div>
+    );
+  }
 }
 
 export default VideoFrame;

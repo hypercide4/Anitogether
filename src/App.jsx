@@ -18,6 +18,8 @@ function App() {
   const [epNum, setEpNum] = useState("");
   const [showChat, setShowChat] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [isBuffering, setIsBuffering] = useState(false);
   const MALidRef = useRef(0);
   const epNumRef = useRef(0);
 
@@ -27,11 +29,18 @@ function App() {
     epNumRef,
     isAutoSyncRef,
     uuid,
+    setIsBuffering,
   });
 
   async function fetchEpisode(selectedId, epNum) {
+    setLoading(true);
+    const payload = await getServer(selectedId, epNum).catch((error) => {
+      setLoading(false);
+      console.error("video didn't load, error: ", error);
+      return;
+    });
+    setLoading(false);
     setShowChat(true);
-    const payload = await getServer(selectedId, epNum);
     setUsers([]);
     setUrl(payload.src);
     setSubs(payload.subs);
@@ -50,36 +59,32 @@ function App() {
         fetchEpisode={fetchEpisode}
       />
       <div className="video-chat-container">
-        <ParticipantList showChat={showChat} users={users} uuid={uuid} />
-        {showChat && (
-          <VideoFrame
-            src={url}
-            subs={subs}
-            sendOverWebsocket={sendOverWebsocket}
-            videoRef={videoRef}
-            username={username}
-            MALidRef={MALidRef}
-            epNumRef={epNumRef}
-            setEpNum={setEpNum}
-            epNum={epNum}
-            isAutoSyncRef={isAutoSyncRef}
-            uuid={uuid}
-            selectedId={selectedId}
-            fetchEpisode={fetchEpisode}
-          />
-        )}
-        {showChat && (
-          <>
-            <LiveChat
-              username={username}
-              messages={messages}
-              sendOverWebsocket={sendOverWebsocket}
-              MALidRef={MALidRef}
-              epNumRef={epNumRef}
-              uuid={uuid}
-            />
-          </>
-        )}
+        <ParticipantList users={users} uuid={uuid} isBuffering={isBuffering} />
+        <VideoFrame
+          src={url}
+          subs={subs}
+          sendOverWebsocket={sendOverWebsocket}
+          videoRef={videoRef}
+          username={username}
+          MALidRef={MALidRef}
+          epNumRef={epNumRef}
+          setEpNum={setEpNum}
+          epNum={epNum}
+          isAutoSyncRef={isAutoSyncRef}
+          uuid={uuid}
+          selectedId={selectedId}
+          fetchEpisode={fetchEpisode}
+          loading={loading}
+        />
+        <LiveChat
+          username={username}
+          messages={messages}
+          sendOverWebsocket={sendOverWebsocket}
+          MALidRef={MALidRef}
+          epNumRef={epNumRef}
+          uuid={uuid}
+          showChat={showChat}
+        />
       </div>
     </div>
   );

@@ -6,6 +6,7 @@ export default function useRoomSocket({
   epNumRef,
   uuid,
   isAutoSyncRef,
+  setIsBuffering,
 }) {
   const [users, setUsers] = useState([]);
   const [messages, setMessagesBox] = useState([]);
@@ -66,18 +67,30 @@ export default function useRoomSocket({
         });
 
         if (incomingData.type === "sync") {
-          if (incomingData.id === uuid) {
-            return;
-          }
-          if (incomingData.action === "pause" && !videoElement.paused) {
+          if (
+            incomingData.action === "pause" &&
+            !videoElement.paused &&
+            incomingData.id !== uuid
+          ) {
             isAutoSyncRef.current = true;
             videoElement.pause();
-          } else if (incomingData.action === "play" && videoElement.paused) {
+          } else if (
+            incomingData.action === "play" &&
+            videoElement.paused &&
+            incomingData.id !== uuid
+          ) {
             isAutoSyncRef.current = true;
             videoElement.play().catch((error) => {
               console.error(error);
               isAutoSyncRef.current = false;
             });
+          } else if (incomingData.action === "buffer") {
+            setIsBuffering(true);
+          } else if (
+            incomingData.action === "timeupdate" &&
+            incomingData.id === uuid
+          ) {
+            setIsBuffering(false);
           } else if (
             incomingData.action === "timeupdate" &&
             incomingData.id !== uuid

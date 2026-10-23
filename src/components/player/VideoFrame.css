@@ -6,6 +6,7 @@ video::cue {
   color: #ffffff !important;
   background: transparent !important;
   background-color: transparent !important;
+  padding-bottom: 20px;
 
   /* Crunchyroll Shadow Outline Combo */
   text-shadow:
@@ -19,14 +20,16 @@ video::cue {
 }
 
 .anime-frame {
-  border-radius: 10px;
-  border-color: rgb(35, 35, 35);
-  border-style: solid;
+  border: none;
   margin-top: 100px;
   width: 1280px;
   height: 780px;
   margin-left: 40px;
   display: flex;
+  outline: none;
+  &&:focus {
+    outline: none;
+  }
 }
 
 .video-option-container {
@@ -58,6 +61,12 @@ video::cue {
   color: #504f4f;
 }
 
+.loading {
+  margin-left: 800px;
+  color: white;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
 .go-prev {
   margin-left: 890px;
   margin-right: 10px;
@@ -72,4 +81,19 @@ video::cue {
   &:hover {
     cursor: pointer;
   }
+}
+
+.embed-message-content-container {
+  width: 300px;
+}
+.embed-message-content {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+video::-webkit-media-text-track-display {
+  transform: translateY(
+    -60px
+  ) !important; /* Adjust pixel amount to lift it higher */
 }

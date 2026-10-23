@@ -8,6 +8,7 @@ export default function usePlaybackSync({
   epNumRef,
   username,
   sendOverWebsocket,
+  loading,
 }) {
   const lastSentRef = useRef(0);
   useEffect(() => {
@@ -62,15 +63,31 @@ export default function usePlaybackSync({
       };
       sendOverWebsocket(messagePayload);
     }
+    function handleBuffer() {
+      const videoTime = videoElement.currentTime;
+      const messagePayload = {
+        type: "sync",
+        MALid: MALidRef.current,
+        epNum: epNumRef.current,
+        username: username,
+        content: null,
+        time: videoTime,
+        action: "buffer",
+        id: uuid,
+      };
+      sendOverWebsocket(messagePayload);
+    }
 
     videoElement.addEventListener("pause", handleSyncPause);
     videoElement.addEventListener("play", handleSyncPlay);
     videoElement.addEventListener("timeupdate", handleSyncTimeUpdate);
+    videoElement.addEventListener("waiting", handleBuffer);
 
     return () => {
       videoElement.removeEventListener("pause", handleSyncPause);
       videoElement.removeEventListener("play", handleSyncPlay);
       videoElement.removeEventListener("timeupdate", handleSyncTimeUpdate);
+      videoElement.removeEventListener("waiting", handleBuffer);
     };
-  }, [username]);
+  }, [username, loading]);
 }

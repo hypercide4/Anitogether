@@ -9,7 +9,7 @@
   border-left: 1px solid #3d3d3d;
   border-radius: 10px;
   margin-left: 10px;
-  height: 775px;
+  height: 700px;
   margin-top: 38px;
   font-family:
     system-ui,
@@ -22,6 +22,7 @@
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-wrap: break-word;
 }
 
 .messages {
@@ -35,6 +36,9 @@
   &::-webkit-scrollbar {
     display: none;
   }
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  word-break: break-all;
 }
 
 .message-content {
@@ -45,6 +49,7 @@
   font-weight: 400;
   line-height: 1.4;
   width: fit-content;
+  white-space: pre-wrap;
 }
 
 .message-username {
@@ -67,8 +72,7 @@
   margin-bottom: 10px;
   background-color: #202020; /* Slightly darker shade for the input bar floor */
 }
-
-.chat-input input {
+.chat-input textarea {
   width: 100%;
   padding: 10px;
   border-radius: 4px;
@@ -77,6 +81,10 @@
   font-size: 16px;
   background-color: #202020;
   color: white;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  overflow-y: auto;
 }
 
 .chat-input input::placeholder {
