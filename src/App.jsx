@@ -11,7 +11,7 @@ const uuid = uuidv4();
 
 function App() {
   const videoRef = useRef(null);
-  const isAutoSyncRef = useRef(false);
+  const isAutoSyncRef = useRef(false); // used to prevent code spamming pause and play
   const [url, setUrl] = useState(null);
   const [subs, setSubs] = useState(null);
   const [username, setUsername] = useState("default");
@@ -19,14 +19,13 @@ function App() {
   const [showChat, setShowChat] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [isBuffering, setIsBuffering] = useState(false);
+  const [isBuffering, setIsBuffering] = useState(false); // still didn't implement this feature
   const MALidRef = useRef(0);
   const epNumRef = useRef(0);
 
   const { users, setUsers, messages, sendOverWebsocket } = useRoomSocket({
+    //turn on websocket so the browsers talk to the backend and enable chat and syncing
     videoRef,
-    MALidRef,
-    epNumRef,
     isAutoSyncRef,
     uuid,
     setIsBuffering,

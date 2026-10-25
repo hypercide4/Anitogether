@@ -2,8 +2,7 @@ import { useEffect, useState, useRef, useCallback } from "react";
 
 export default function useRoomSocket({
   videoRef,
-  MALidRef,
-  epNumRef,
+
   uuid,
   isAutoSyncRef,
   setIsBuffering,
@@ -29,39 +28,33 @@ export default function useRoomSocket({
     ws.onmessage = (event) => {
       try {
         const videoElement = videoRef.current;
-        const incomingData = JSON.parse(event.data);
-
-        if (incomingData.type === "messageAdmin") {
-          setMessagesBox((prev) => [...prev, incomingData]);
-          return;
-        }
+        const incomingData = JSON.parse(event.data); // turn it back from a string into a dictionary
 
         if (
-          MALidRef.current != incomingData.MALid ||
-          epNumRef.current != incomingData.epNum
-        )
-          return;
-
-        if (incomingData.type === "message") {
+          incomingData.type === "message" ||
+          incomingData.type === "messageAdmin"
+        ) {
           setMessagesBox((prev) => [...prev, incomingData]);
           return;
         }
 
         setUsers((prev) => {
-          const otherid = incomingData.id;
-          if (!otherid) return prev;
-          const exists = prev.some((user) => user.id === otherid);
+          const otherId = incomingData.id;
+          if (!otherId) return prev; // if there is no id in the incoming data, return early
+          const exists = prev.some((user) => user.id === otherId); // check if the user is already in the user array
           if (exists) {
+            // if the user in the array: update their time, else keep the user unchanged (used to show everyone's time)
             return prev.map((user) =>
-              user.id === otherid ? { ...user, time: incomingData.time } : user,
+              user.id === otherId ? { ...user, time: incomingData.time } : user,
             );
           }
+          // if they aren't in the array, put them in the array
           return [
             ...prev,
             {
               username: incomingData.username,
               time: incomingData.time,
-              id: otherid,
+              id: otherId,
             },
           ];
         });
@@ -95,12 +88,13 @@ export default function useRoomSocket({
             incomingData.action === "timeupdate" &&
             incomingData.id !== uuid
           ) {
-            if (
-              videoElement.currentTime > incomingData.time + 5 &&
-              videoElement.currentTime < incomingData.time + 20
-            ) {
+            const timeDifference = videoElement.currentTime - incomingData.time;
+            // positive means you are ahead
+            if (timeDifference > 5 && timeDifference < 20) {
+              // if you are ahead of someone by 5-20 seconds, go back to their time
               videoElement.currentTime = incomingData.time;
-            } else if (videoElement.currentTime < incomingData.time - 16) {
+            } else if (timeDifference < -16) {
+              // if someone is ahead of you by more than 16 seconds, go to their time
               videoElement.currentTime = incomingData.time;
             }
           }

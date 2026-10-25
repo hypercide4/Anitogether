@@ -48,7 +48,7 @@ function VideoFrame({
 
       hls.on(Hls.Events.MANIFEST_PARSED, (_event, data) => {
         setLevels(data.levels);
-        setQuality(-1);
+        setQuality(-1); // -1 means default
       });
 
       return () => {
@@ -85,11 +85,12 @@ function VideoFrame({
       return;
 
     try {
+      //epnumRef stores episode numbers as strings i.e "3" so have to convert into 3 first to do math and then convert back to string
       epNumRef.current = String(nextEpisode);
       setEpNum(String(nextEpisode));
       await fetchEpisode(selectedId, nextEpisode);
     } catch (error) {
-      console.log("couldn't lose episode, error: ", error);
+      console.log("couldn't load episode, error: ", error);
       setEpNum(String(nextEpisode - amount));
       epNumRef.current = String(nextEpisode - amount);
     }

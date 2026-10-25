@@ -48,7 +48,7 @@ export default function usePlaybackSync({
     function handleSyncTimeUpdate() {
       const now = Date.now();
       if (now - lastSentRef.current < 500) return;
-      lastSentRef.current = now;
+      lastSentRef.current = now; // 500ms between each sync message sent
 
       const videoTime = videoElement.currentTime;
       const messagePayload = {
