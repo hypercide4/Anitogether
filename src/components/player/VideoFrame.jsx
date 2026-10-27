@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import Hls from "hls.js";
 import usePlaybackSync from "../../hooks/usePlaybackSync";
 import "./VideoFrame.css";
+import "../../globals.css";
 
 function VideoFrame({
   src,
@@ -98,8 +99,8 @@ function VideoFrame({
 
   if (!loading) {
     return (
-      <div className="video-container">
-        <div>
+      <>
+        <div className="video-container">
           <video
             ref={videoRef}
             controls
@@ -142,7 +143,7 @@ function VideoFrame({
                 }}
                 className="go-prev option-change-episode"
               >
-                Go prev
+                Prev
               </button>
               <button
                 onClick={() => {
@@ -150,12 +151,12 @@ function VideoFrame({
                 }}
                 className="option-change-episode"
               >
-                Go next
+                Next
               </button>
             </div>
           )}
         </div>
-      </div>
+      </>
     );
   } else {
     return (

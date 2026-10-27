@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import "./LiveChat.css";
+import "../../globals.css";
 import getEmbLinksIfExist from "../../utils/getEmbLinksIfExist";
 
 function LiveChat({
@@ -89,7 +90,7 @@ function LiveChat({
           <div className="chat-input">
             <textarea
               type="text"
-              placeholder="Send a message here!"
+              placeholder="message.."
               value={inputText}
               onKeyDown={handleKeyPress}
               onChange={handleInput}

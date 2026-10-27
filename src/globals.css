@@ -1,17 +1,35 @@
+@import url("https://googleapis.com");
 
-
-* {
-
-  padding: 0;
+*,
+*::before,
+*::after,
+input,
+button,
+select,
+textarea,
+h1,
+h2,
+p {
   box-sizing: border-box;
+  border: none;
+  font-family: "Inter", sans-serif;
+  outline: none;
 }
 
 body {
-  padding: 0;
-  background-color:rgb(20, 20, 20);
-  min-height: 170dvh;
-  overflow-y:scroll;
-  &::-webkit-scrollbar {
-    display: none;
+  margin: 0;
+  background-color: rgb(32, 32, 32);
+  height: 1440px;
+  overflow-x: hidden;
+}
+
+@media (min-width: 680px) {
+  .video-chat-container {
+    display: flex;
+    align-items: stretch;
+    position: relative;
+  }
+  body {
+    height: 1600px;
   }
 }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import searchAnime from "../../services/searchapi";
 import "./AnimePicker.css";
+import "../../globals.css";
 
 function AnimePicker({
   MALidRef,
@@ -29,45 +30,43 @@ function AnimePicker({
   return (
     <>
       <div className="input-container">
-        <div>
-          <input
-            type="text"
-            className="input-box"
-            placeholder="username"
-            onChange={(e) => {
-              setUsername(e.target.value);
-            }}
-          />
-          <input
-            type="text"
-            className="input-box"
-            onChange={(e) => {
-              setSearchText(e.target.value);
-            }}
-            placeholder="search"
-          />
-          <input
-            type="text"
-            className="input-box"
-            placeholder="ep"
-            onChange={(e) => {
-              setEpNum(e.target.value);
-              epNumRef.current = e.target.value;
-            }}
-          />
-          <button
-            className="input-button"
-            onClick={async () => {
-              try {
-                await fetchEpisode(selectedId, epNum);
-              } catch (error) {
-                console.error("couldn't load episode, error: ", error);
-              }
-            }}
-          >
-            go
-          </button>
-        </div>
+        <input
+          type="text"
+          className="input-box"
+          placeholder="username"
+          onChange={(e) => {
+            setUsername(e.target.value);
+          }}
+        />
+        <input
+          type="text"
+          className="input-box"
+          onChange={(e) => {
+            setSearchText(e.target.value);
+          }}
+          placeholder="search"
+        />
+        <input
+          type="text"
+          className="input-box"
+          placeholder="ep"
+          onChange={(e) => {
+            setEpNum(e.target.value);
+            epNumRef.current = e.target.value;
+          }}
+        />
+        <button
+          className="input-button"
+          onClick={async () => {
+            try {
+              await fetchEpisode(selectedId, epNum);
+            } catch (error) {
+              console.error("couldn't load episode, error: ", error);
+            }
+          }}
+        >
+          go
+        </button>
       </div>
       <div className="search-items">
         {search.map((item) => {

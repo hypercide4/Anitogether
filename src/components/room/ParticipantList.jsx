@@ -1,5 +1,6 @@
 import formatTime from "../../utils/formatTime";
 import "./ParticipantList.css";
+import "../../globals.css"
 
 export default function ParticipantList({ users, uuid }) {
   return (

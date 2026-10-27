@@ -5,6 +5,7 @@ import LiveChat from "./components/chat/LiveChat";
 import VideoFrame from "./components/player/VideoFrame";
 import ParticipantList from "./components/room/ParticipantList";
 import getServer from "./services/serverapi";
+import "./globals.css";
 
 import { v4 as uuidv4 } from "uuid";
 const uuid = uuidv4();
