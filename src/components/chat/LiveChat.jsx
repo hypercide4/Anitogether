@@ -95,6 +95,26 @@ function LiveChat({
               onKeyDown={handleKeyPress}
               onChange={handleInput}
             />
+            <button
+              className="send-button"
+              onClick={(e) => {
+                e.preventDefault();
+                const messagePayload = {
+                  type: "message",
+                  MALid: MALidRef.current,
+                  epNum: epNumRef.current,
+                  username: username,
+                  content: inputText,
+                  time: null,
+                  action: null,
+                  id: uuid,
+                };
+                sendOverWebsocket(messagePayload);
+                setInputText("");
+              }}
+            >
+              🗯
+            </button>
           </div>
         </div>
       </>

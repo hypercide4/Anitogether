@@ -71,7 +71,7 @@ video:-webkit-full-screen {
 button {
   background-color: rgb(65, 65, 65);
   color: white;
-  padding: 0.63em 2em;
+  padding: 0.63em 1.5em;
   border-radius: 1em;
   &&:hover {
     background-color: rgb(40, 40, 40);

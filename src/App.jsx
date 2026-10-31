@@ -57,6 +57,7 @@ function App() {
         setSelectedId={setSelectedId}
         setUsername={setUsername}
         fetchEpisode={fetchEpisode}
+        loading={loading}
       />
       <div className="video-chat-container">
         <ParticipantList users={users} uuid={uuid} isBuffering={isBuffering} />

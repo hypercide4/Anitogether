@@ -12,6 +12,7 @@ function AnimePicker({
   setEpNum,
   epNum,
   fetchEpisode,
+  loading,
 }) {
   const [searchText, setSearchText] = useState("");
   const [search, setSearch] = useState([]);
@@ -69,35 +70,36 @@ function AnimePicker({
         </button>
       </div>
       <div className="search-items">
-        {search.map((item) => {
-          var clicked = false;
-          if (selectedId === item.id) {
-            clicked = true;
-          }
+        {!loading &&
+          search.map((item) => {
+            var clicked = false;
+            if (selectedId === item.id) {
+              clicked = true;
+            }
 
-          return (
-            <div
-              key={item.id}
-              className={clicked ? "search-item-clicked" : "search-item"}
-              onClick={() => {
-                if (selectedId === item.id) {
-                  setSelectedId(null);
-                  MALidRef.current = null;
-                } else {
-                  setSelectedId(item.id);
-                  MALidRef.current = item.id;
-                }
-              }}
-            >
-              <div className="search-picture">
-                <img src={item.image_url} />
+            return (
+              <div
+                key={item.id}
+                className={clicked ? "search-item-clicked" : "search-item"}
+                onClick={() => {
+                  if (selectedId === item.id) {
+                    setSelectedId(null);
+                    MALidRef.current = null;
+                  } else {
+                    setSelectedId(item.id);
+                    MALidRef.current = item.id;
+                  }
+                }}
+              >
+                <div className="search-picture">
+                  <img src={item.image_url} />
+                </div>
+                <div className="search-name">
+                  <h2>{item.name}</h2>
+                </div>
               </div>
-              <div className="search-name">
-                <h2>{item.name}</h2>
-              </div>
-            </div>
-          );
-        })}
+            );
+          })}
       </div>
     </>
   );

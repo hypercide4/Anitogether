@@ -54,7 +54,7 @@
   border-radius: 0.5em;
   width: 95%;
   margin: 5px 8px;
-  margin-bottom: 0px;
+  margin-bottom: 5px;
   resize: none;
   padding-top: 10px;
   padding-left: 10px;
@@ -71,6 +71,21 @@
     }
   }
   font-size: 1.125em;
+}
+
+.chat-input {
+  display: flex;
+}
+
+.send-button {
+  background-color: rgb(18, 18, 18);
+  color: white;
+  border-radius: 0.5em;
+  resize: none;
+  height: 5em;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  margin-right: 5px;
 }
 
 @media (min-width: 680px) {
